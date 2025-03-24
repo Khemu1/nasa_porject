@@ -1,7 +1,7 @@
 # Space Launch System 🚀
 
 ## Overview
-The **Space Launch System** is a full-stack application that manages upcoming space launches and planetary data. It allows users to view, add, and abort launches while maintaining a list of habitable exoplanets.
+The **Space Launch System** is a full-stack application that manages upcoming space launches and planetary data. It allows users to view, add, and abort launches while maintaining a list of habitable exoplanets using NASA Exoplanet Archive.
 
 ## Features
 - 🌍 **Exoplanet Database**: Fetches and filters habitable exoplanets from a dataset.
@@ -30,3 +30,4 @@ The **Space Launch System** is a full-stack application that manages upcoming sp
 - `POST /launches` → Schedule a new launch.
 - `DELETE /launches/:id` → Abort a scheduled launch.
 
+[**Architecture Diagram**](https://lucid.app/lucidspark/97ce4ce7-746b-4d86-82cf-5d13d6792550/edit?view_items=Lkh4PGVA8Opy&invitationId=inv_22a09738-f482-48c9-b5ff-afec74c02b99)
