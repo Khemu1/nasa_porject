@@ -1,0 +1,23 @@
+{
+  "name": "nasa_porject",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "khemu",
+  "main": "src/server.ts",
+  "scripts": {
+    "start:dev": "nodemon"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.6.0",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
