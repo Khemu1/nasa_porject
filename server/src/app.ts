@@ -11,9 +11,12 @@ export const app = express();
 app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(cors({ origin: "*" }));
 app.use(morgan("dev"));
-app.use(express.json());
-app.use(errorHandler);
-// Middleware to prevent caching
+app.use(
+  express.json({
+    type: ["application/json"],
+  })
+);
+// middleware to prevent caching
 app.use((req, res, next) => {
   res.setHeader(
     "Cache-Control",
@@ -41,3 +44,6 @@ app.use("/launches", launchesRouter);
 app.get("/*", (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
+
+// it must always the last middleware
+app.use(errorHandler);

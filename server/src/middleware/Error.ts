@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { NextFunction, Request, Response } from "express";
 
 export class CustomError extends Error {
-  message: string;
   statusCode: number;
   status: string;
   safe: boolean;
   type: string;
-  details: string = "";
+  details?: string;
   errors?: Record<string, string>;
 
   constructor(
@@ -20,14 +18,15 @@ export class CustomError extends Error {
     errors?: Record<string, string>
   ) {
     super(message);
-    this.message = message;
+    Object.setPrototypeOf(this, CustomError.prototype); // ensure correct prototype chain
+    Error.captureStackTrace(this, this.constructor); // ensure proper stack trace
+
     this.statusCode = statusCode;
     this.status = statusCode >= 200 && statusCode < 300 ? "success" : "fail";
     this.safe = safe;
-    this.details = details || "";
+    this.details = details;
     this.type = type;
     this.errors = errors;
-    // this.stack = new Error().stack;
   }
 }
 
@@ -36,15 +35,18 @@ export const sendDevError = (
   _req: Request,
   res: Response
 ) => {
-  const {
-    statusCode = 500,
-    status = "error",
+  const { statusCode, status, message, stack, type, details, errors } = error;
+
+  console.error("🚨 Error Details:", {
+    statusCode,
+    status,
     message,
-    stack,
     type,
     details,
     errors,
-  } = error;
+    stack,
+  });
+
   res.status(statusCode).json({
     status,
     message,
@@ -60,15 +62,7 @@ export const sendProdError = (
   _req: Request,
   res: Response
 ) => {
-  const {
-    statusCode = 500,
-    status = "error",
-    message,
-    safe,
-    type,
-    details,
-    errors,
-  } = error;
+  const { statusCode, status, message, safe, type, details, errors } = error;
 
   if (safe) {
     res.status(statusCode).json({
@@ -79,6 +73,14 @@ export const sendProdError = (
       errors: errors || {},
     });
   } else {
+    console.error("Critical Error (Hidden in Response)", {
+      statusCode,
+      message,
+      type,
+      details,
+      errors,
+    });
+
     res.status(500).json({
       status: "error",
       message: "Something went wrong!",
@@ -95,8 +97,11 @@ export const errorHandler = (
   if (res.headersSent) {
     return next(err);
   }
-  console.error(err);
+
   const isProd = process.env.NODE_ENV === "production";
+
+  console.error("Error Caught:", err.message);
+  console.error("Stack Trace:", err.stack);
 
   isProd ? sendProdError(err, req, res) : sendDevError(err, req, res);
 };

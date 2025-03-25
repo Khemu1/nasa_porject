@@ -15,9 +15,10 @@ exports.app = (0, express_1.default)();
 exports.app.use(express_1.default.static(node_path_1.default.join(__dirname, "..", "public")));
 exports.app.use((0, cors_1.default)({ origin: "*" }));
 exports.app.use((0, morgan_1.default)("dev"));
-exports.app.use(express_1.default.json());
-exports.app.use(Error_1.errorHandler);
-// Middleware to prevent caching
+exports.app.use(express_1.default.json({
+    type: ["application/json"],
+}));
+// middleware to prevent caching
 exports.app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
     res.setHeader("Pragma", "no-cache");
@@ -39,3 +40,5 @@ exports.app.use("/launches", launches_route_1.launchesRouter);
 exports.app.get("/*", (_req, res) => {
     res.sendFile(node_path_1.default.join(__dirname, "..", "public", "index.html"));
 });
+// it must always the last middleware
+exports.app.use(Error_1.errorHandler);
