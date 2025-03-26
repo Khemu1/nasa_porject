@@ -35,8 +35,8 @@ exports.app.use((req, _res, next) => {
     console.log(`${req.method} - ${req.url} - ${duration}ms.`);
 });
 // Routes
-exports.app.use("/planets", planets_route_1.planetRouter);
-exports.app.use("/launches", launches_route_1.launchesRouter);
+exports.app.use("/api/planets", planets_route_1.planetRouter);
+exports.app.use("/api/launches", launches_route_1.launchesRouter);
 exports.app.get("/*", (_req, res) => {
     res.sendFile(node_path_1.default.join(__dirname, "..", "public", "index.html"));
 });

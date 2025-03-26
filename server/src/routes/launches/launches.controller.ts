@@ -1,92 +1,60 @@
 import { Request, Response, NextFunction } from "express";
-import {
-  getAll,
-  getHistory,
-  getUpComing,
-  abortlaunch as abort,
-  Launch,
-  newLaunch,
-} from "../../models/launches.model";
-import { CustomError } from "../../middleware/Error";
+
+import LaunchService from "./launches.service";
+import { ILaunch } from "../../models/launches/launches.model";
 
 export default class LaunchController {
-  constructor() {}
+  constructor(private readonly launchService: LaunchService) {}
 
-  getUpComing = (_req: Request, res: Response, next: NextFunction) => {
+  getUpComing = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.status(200).json(getUpComing());
+      const upcoming = await this.launchService.getUpcoming();
+      res.status(200).json(upcoming);
     } catch (error) {
       next(error);
     }
   };
-  getHistory = (_req: Request, res: Response, next: NextFunction) => {
+  getHistory = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      res.status(200).json(getHistory());
+      const history = await this.launchService.getHistory();
+
+      res.status(200).json(history);
     } catch (error) {
       next(error);
     }
   };
-  getAll = (_req: Request, res: Response, next: NextFunction) => {
+  getAll = async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      // don't forget to transform the map into an array -_-
-      res.status(200).json(getAll());
+      const launches = await this.launchService.getAllLaunches();
+
+      res.status(200).json(launches);
     } catch (error) {
       next(error);
     }
   };
-  abortlaunch = (req: Request, res: Response, next: NextFunction) => {
+  abortlaunch = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      res.status(200).json(abort(+id));
+      const result = await this.launchService.abortLaunch(id);
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }
   };
 
-  addLaunch = (
+  addLaunch = async (
     req: Request<
       {},
       {},
-      Omit<Launch, "flightNumber" | "upcoming" | "success" | "customers">
+      Omit<ILaunch, "flightNumber" | "upcoming" | "success" | "customers">
     >,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const data = req.body;
-      console.log("req body", data);
-      const requiredKeys: Array<
-        keyof Omit<
-          Launch,
-          "flightNumber" | "upcoming" | "success" | "customers"
-        >
-      > = ["mission", "rocket", "launchDate", "target"];
-
-      for (const key of requiredKeys) {
-        if (!data[key]) {
-          throw new CustomError(`Missing required field: ${key}`, 400);
-        }
-      }
-
-      if (typeof data.mission !== "string" || data.mission.trim() === "") {
-        throw new CustomError("invalid mission", 400);
-      }
-      if (typeof data.rocket !== "string" || data.rocket.trim() === "") {
-        throw new CustomError("invalid rocket", 400);
-      }
-      if (typeof data.target !== "string" || data.target.trim() === "") {
-        throw new CustomError("invalid target", 400);
-      }
-
-      const launchDate = new Date(data.launchDate);
-      if (isNaN(launchDate.getTime())) {
-        throw new CustomError("invalid launch date", 400);
-      }
-      data.launchDate = launchDate;
-
-      const launch = newLaunch(data);
-
-      res.status(201).json(launch);
+      const newLaunch = await this.launchService.addNewLaunch(data);
+      res.status(201).json(newLaunch);
     } catch (error) {
       next(error);
     }

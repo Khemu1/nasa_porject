@@ -51,11 +51,13 @@ function useLaunches(onSuccessSound, onAbortSound, onFailureSound) {
 
   const abortLaunch = useCallback(
     async (id) => {
+      console.log("trying to abort launch with id , ", id);
       const response = await httpAbortLaunch(id);
 
       // TODO: Set success based on response.
       let success = false;
       if (response) {
+        console.log("got response for abort launch ", response);
         success = true;
       }
       if (success) {

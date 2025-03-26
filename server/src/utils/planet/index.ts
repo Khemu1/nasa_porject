@@ -2,17 +2,18 @@ import { parse } from "csv-parse";
 import fs from "fs";
 import path from "path";
 import { pipeline } from "node:stream/promises";
-import { Planet } from "../../models/planets.model";
+import { IPlanet } from "../../models/planets/planets.model";
+import { PlanetModel } from "../../models/planets/planets.model";
 
 // swtiched to using stream/promises instead
 
-export const loadFile = async (): Promise<Planet[]> => {
-  const result: Planet[] = [];
+export const loadFile = async (): Promise<IPlanet[]> => {
+  const result: IPlanet[] = [];
   const sourcePath = path.join(
     __dirname,
     "..",
     "..",
-    "database",
+    "data",
     "kepler_data.csv"
   );
 
@@ -21,8 +22,18 @@ export const loadFile = async (): Promise<Planet[]> => {
     columns: true,
   });
 
-  parser.on("data", (row) => {
-    if (returnHabitablePlanets(row)) result.push(row);
+  parser.on("data", async (row: { [key: string]: string }) => {
+    try {
+      if (returnHabitablePlanets(row))
+        await PlanetModel.findOneAndUpdate(
+          { keplerName: row.kepler_name },
+          { $set: { keplerName: row.kepler_name } },
+          { upsert: true, new: true }
+        );
+    } catch (error) {
+      console.error("Error while parsing CSV:", error);
+      throw error;
+    }
   });
 
   await pipeline(fs.createReadStream(sourcePath), parser);

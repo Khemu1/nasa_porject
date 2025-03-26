@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ignore": ["dist"],
   "ext": "ts js",
-  "exec": "clear && npx tsc -p . && node src/scripts/copyFiles.mjs &&  PORT=5000 node dist/src/server.js"
+  "exec": "clear && npx tsc -p . && node src/scripts/copyFiles.mjs && node dist/src/server.js"
 }

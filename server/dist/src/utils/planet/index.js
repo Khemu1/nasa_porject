@@ -17,18 +17,25 @@ const csv_parse_1 = require("csv-parse");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const promises_1 = require("node:stream/promises");
+const planets_model_1 = require("../../models/planets/planets.model");
 // swtiched to using stream/promises instead
 const loadFile = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = [];
-    const sourcePath = path_1.default.join(__dirname, "..", "..", "database", "kepler_data.csv");
+    const sourcePath = path_1.default.join(__dirname, "..", "..", "data", "kepler_data.csv");
     const parser = (0, csv_parse_1.parse)({
         comment: "#",
         columns: true,
     });
-    parser.on("data", (row) => {
-        if (returnHabitablePlanets(row))
-            result.push(row);
-    });
+    parser.on("data", (row) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            if (returnHabitablePlanets(row))
+                yield planets_model_1.PlanetModel.findOneAndUpdate({ keplerName: row.kepler_name }, { $set: { keplerName: row.kepler_name } }, { upsert: true, new: true });
+        }
+        catch (error) {
+            console.error("Error while parsing CSV:", error);
+            throw error;
+        }
+    }));
     yield (0, promises_1.pipeline)(fs_1.default.createReadStream(sourcePath), parser);
     console.log("Parsing is done");
     console.log("Total planets that meet the condition:", result.length);

@@ -38,8 +38,8 @@ app.use((req, _res, next) => {
 });
 
 // Routes
-app.use("/planets", planetRouter);
-app.use("/launches", launchesRouter);
+app.use("/api/planets", planetRouter);
+app.use("/api/launches", launchesRouter);
 
 app.get("/*", (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));

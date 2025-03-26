@@ -1,74 +1,64 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const launches_model_1 = require("../../models/launches.model");
-const Error_1 = require("../../middleware/Error");
 class LaunchController {
-    constructor() {
-        this.getUpComing = (_req, res, next) => {
+    constructor(launchService) {
+        this.launchService = launchService;
+        this.getUpComing = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                res.status(200).json((0, launches_model_1.getUpComing)());
+                const upcoming = yield this.launchService.getUpcoming();
+                res.status(200).json(upcoming);
             }
             catch (error) {
                 next(error);
             }
-        };
-        this.getHistory = (_req, res, next) => {
+        });
+        this.getHistory = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                res.status(200).json((0, launches_model_1.getHistory)());
+                const history = yield this.launchService.getHistory();
+                res.status(200).json(history);
             }
             catch (error) {
                 next(error);
             }
-        };
-        this.getAll = (_req, res, next) => {
+        });
+        this.getAll = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                // don't forget to transform the map into an array -_-
-                res.status(200).json((0, launches_model_1.getAll)());
+                const launches = yield this.launchService.getAllLaunches();
+                res.status(200).json(launches);
             }
             catch (error) {
                 next(error);
             }
-        };
-        this.abortlaunch = (req, res, next) => {
+        });
+        this.abortlaunch = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const id = req.params.id;
-                res.status(200).json((0, launches_model_1.abortlaunch)(+id));
+                const result = yield this.launchService.abortLaunch(id);
+                res.status(200).json(result);
             }
             catch (error) {
                 next(error);
             }
-        };
-        this.addLaunch = (req, res, next) => {
+        });
+        this.addLaunch = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const data = req.body;
-                console.log("req body", data);
-                const requiredKeys = ["mission", "rocket", "launchDate", "target"];
-                for (const key of requiredKeys) {
-                    if (!data[key]) {
-                        throw new Error_1.CustomError(`Missing required field: ${key}`, 400);
-                    }
-                }
-                if (typeof data.mission !== "string" || data.mission.trim() === "") {
-                    throw new Error_1.CustomError("invalid mission", 400);
-                }
-                if (typeof data.rocket !== "string" || data.rocket.trim() === "") {
-                    throw new Error_1.CustomError("invalid rocket", 400);
-                }
-                if (typeof data.target !== "string" || data.target.trim() === "") {
-                    throw new Error_1.CustomError("invalid target", 400);
-                }
-                const launchDate = new Date(data.launchDate);
-                if (isNaN(launchDate.getTime())) {
-                    throw new Error_1.CustomError("invalid launch date", 400);
-                }
-                data.launchDate = launchDate;
-                const launch = (0, launches_model_1.newLaunch)(data);
-                res.status(201).json(launch);
+                const newLaunch = yield this.launchService.addNewLaunch(data);
+                res.status(201).json(newLaunch);
             }
             catch (error) {
                 next(error);
             }
-        };
+        });
     }
 }
 exports.default = LaunchController;

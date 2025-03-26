@@ -4,10 +4,16 @@
   "description": "",
   "license": "ISC",
   "author": "khemu",
-  "main": "src/server.ts",
+  "main": "dist/src/server.js",
+  "type": "commonjs",
   "scripts": {
-    "test": "jest",
-    "start:dev": "nodemon"
+    "build": "npx tsc -p . && node src/scripts/copyFiles.mjs",
+    "test": "jest --detectOpenHandles",
+    "start": "node dist/src/server.js",
+    "start:dev": "nodemon",
+    "pm2:start": "pm2 start ./ecosystem.config.js --env production",
+    "pm2:stop": "pm2 stop ./ecosystem.config.js",
+    "pm2:delete": "pm2 delete ./ecosystem.config.js"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",
@@ -15,8 +21,11 @@
     "@types/morgan": "^1.9.9",
     "cors": "^2.8.5",
     "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "morgan": "^1.10.0"
+    "mongoose": "^8.13.0",
+    "morgan": "^1.10.0",
+    "pm2": "^5.4.3"
   },
   "devDependencies": {
     "@jest/types": "^29.6.3",

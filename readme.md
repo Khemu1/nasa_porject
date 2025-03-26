@@ -10,11 +10,14 @@ The **Space Launch System** is a full-stack application that manages upcoming sp
 
 
 ## Technologies Used
-### **Backend** (NestJS & Express)
+### **Backend** (Express)
 - **Node.js**: Backend runtime.
 - **TypeScript**: Strongly typed development.
 - **morgan**: logger.
-- **csv-parser**: parses csv files.
+- **csv-parser**: Parses csv files.
+- **mongoose**: Database management 
+- **pm2**: Process manager  
+-**jest**: API tests
 
 
 ### **Frontend** (React)

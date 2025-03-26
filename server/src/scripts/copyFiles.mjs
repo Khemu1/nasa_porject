@@ -7,8 +7,8 @@ const __dirname = path.dirname(__filename);
 
 const SOURCE_FOLDERS = [
   {
-    src: path.resolve(__dirname, "..", "database"),
-    dest: path.resolve(__dirname, "../../dist/src/database"),
+    src: path.resolve(__dirname, "..", "data"),
+    dest: path.resolve(__dirname, "../../dist/src/data"),
     filterByExtension: true, // Only copy specific file types (e.g., CSVs)
   },
   {

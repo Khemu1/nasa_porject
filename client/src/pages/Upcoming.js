@@ -18,12 +18,12 @@ const Upcoming = (props) => {
       ?.filter((launch) => launch.upcoming)
       .map((launch) => {
         return (
-          <tr key={String(launch.flightNumber)}>
+          <tr key={launch._id}>
             <td>
               <Clickable style={{ color: "red" }}>
                 <Link
                   className={classes.link}
-                  onClick={() => abortLaunch(launch.flightNumber)}
+                  onClick={() => abortLaunch(launch._id)}
                 >
                   ✖
                 </Link>

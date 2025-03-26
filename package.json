@@ -5,11 +5,13 @@
   "license": "ISC",
   "author": "khemu",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
     "server": "cd server && npm run start:dev",
     "client": "cd client && npm run start",
     "watch": " npm run server & npm run client",
-    "deploy":"npm run build & npm run server"
+    "build:frontend": "cd client && npm run build",
+    "deploy": "npm run build & npm run server",
+    "pm2:start": "cd server && npm run build && npm run pm2:start",
+    "deploy:pm2": "clear && npm run build:frontend && npm run pm2:start"
   }
 }
