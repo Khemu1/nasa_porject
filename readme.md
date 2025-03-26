@@ -1,12 +1,12 @@
-# Space Launch System 🚀
+# Space Launch System 
 
 ## Overview
 The **Space Launch System** is a full-stack application that manages upcoming space launches and planetary data. It allows users to view, add, and abort launches while maintaining a list of habitable exoplanets using NASA Exoplanet Archive.
 
 ## Features
-- 🌍 **Exoplanet Database**: Fetches and filters habitable exoplanets from a dataset.
-- 🚀 **Launch Management**: Users can schedule new launches and abort existing ones.
-- 🔄 **RESTful API**: Provides endpoints for managing space missions.
+- **Exoplanet Database**: Fetches and filters habitable exoplanets from a dataset.
+- **Launch Management**: Users can schedule new launches and abort existing ones.
+- **RESTful API**: Provides endpoints for managing space missions.
 
 
 ## Technologies Used
@@ -17,7 +17,7 @@ The **Space Launch System** is a full-stack application that manages upcoming sp
 - **csv-parser**: Parses csv files.
 - **mongoose**: Database management 
 - **pm2**: Process manager  
--**jest**: API tests
+- **jest**: API tests
 
 
 ### **Frontend** (React)
