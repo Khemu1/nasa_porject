@@ -1,17 +1,21 @@
 const request = require("supertest");
 const { app } = require("../../app.ts");
 const { connectDB, disconnectDB } = require("../../config/database.config.ts");
+const LaunchService = require("../launches/launches.service").default;
+
+const ROUTE = "/api/v1/launches";
 
 describe("Testing launches API", () => {
   beforeAll(async () => {
     await connectDB();
+    await LaunchService.getLaunchData();
   });
   afterAll(async () => {
     await disconnectDB();
   });
   describe("Test GET /launches", () => {
     test("should respond with 200 success and return an array", async () => {
-      const response = await request(app).get("/api/launches");
+      const response = await request(app).get(ROUTE);
 
       console.log("Response body:", response.body);
 
@@ -34,7 +38,7 @@ describe("Testing launches API", () => {
       };
 
       const response = await request(app)
-        .post("/api/launches")
+        .post(ROUTE)
         .send(newLaunch)
         .set("Content-Type", "application/json");
 
@@ -58,7 +62,7 @@ describe("Testing launches API", () => {
       };
 
       const response = await request(app)
-        .post("/api/launches")
+        .post(ROUTE)
         .send(invalidLaunch)
         .set("Content-Type", "application/json");
 
@@ -82,7 +86,7 @@ describe("Testing launches API", () => {
       };
 
       const response = await request(app)
-        .post("/api/launches")
+        .post(ROUTE)
         .send(invalidLaunch)
         .set("Content-Type", "application/json");
 

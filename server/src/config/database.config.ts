@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
-    console.log("trying to conenct to uri ", process.env.DATABASE_URI);
+    console.log("trying to conenct to uri ", process.env.DATABASE_URI, {});
     const conn = await mongoose.connect(
       process.env.DATABASE_URI || "mongodb://localhost/spaceX"
     );

@@ -23,9 +23,13 @@ export default class LaunchController {
       next(error);
     }
   };
-  getAll = async (_req: Request, res: Response, next: NextFunction) => {
+  getAll = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const launches = await this.launchService.getAllLaunches();
+      const query: {
+        limit?: number;
+        page?: number;
+      } = req.query;
+      const launches = await this.launchService.getAllLaunches(query);
 
       res.status(200).json(launches);
     } catch (error) {

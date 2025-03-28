@@ -13,12 +13,12 @@ export interface ILaunch extends Document {
 }
 
 const launchesSchema = new Schema<ILaunch>({
-  flightNumber: { type: Number, required: true, unique: true },
-  mission: { type: String, required: true },
-  rocket: { type: String, required: true },
-  launchDate: { type: Date, required: true },
-  target: { type: String, required: true },
-  customers: [String],
+  flightNumber: { type: Number, required: true, unique: true }, // filight_nubmer
+  mission: { type: String, required: true }, // name
+  rocket: { type: String, required: true }, // rocket.name
+  launchDate: { type: Date, required: true }, // date_local
+  target: { type: String },
+  customers: [String], // payloads.customers
   upcoming: { type: Boolean, required: true },
   success: { type: Boolean, required: true },
 });

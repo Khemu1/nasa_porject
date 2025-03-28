@@ -2,13 +2,11 @@ import { parse } from "csv-parse";
 import fs from "fs";
 import path from "path";
 import { pipeline } from "node:stream/promises";
-import { IPlanet } from "../../models/planets/planets.model";
 import { PlanetModel } from "../../models/planets/planets.model";
 
 // swtiched to using stream/promises instead
 
-export const loadFile = async (): Promise<IPlanet[]> => {
-  const result: IPlanet[] = [];
+export const loadFile = async (): Promise<void> => {
   const sourcePath = path.join(
     __dirname,
     "..",
@@ -39,9 +37,6 @@ export const loadFile = async (): Promise<IPlanet[]> => {
   await pipeline(fs.createReadStream(sourcePath), parser);
 
   console.log("Parsing is done");
-  console.log("Total planets that meet the condition:", result.length);
-
-  return result;
 };
 
 const returnHabitablePlanets = (planet: { [key: string]: string }) => {

@@ -1,10 +1,9 @@
 import express from "express";
-import { planetRouter } from "./routes/planets/planets.route";
 import { errorHandler } from "./middleware/Error";
 import cors from "cors";
 import path from "node:path";
 import morgan from "morgan";
-import { launchesRouter } from "./routes/launches/launches.route";
+import { api } from "./routes/api";
 
 export const app = express();
 
@@ -38,8 +37,8 @@ app.use((req, _res, next) => {
 });
 
 // Routes
-app.use("/api/planets", planetRouter);
-app.use("/api/launches", launchesRouter);
+
+app.use("/api/v1", api);
 
 app.get("/*", (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));

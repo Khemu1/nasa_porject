@@ -7,6 +7,7 @@ The **Space Launch System** is a full-stack application that manages upcoming sp
 - **Exoplanet Database**: Fetches and filters habitable exoplanets from a dataset.
 - **Launch Management**: Users can schedule new launches and abort existing ones.
 - **RESTful API**: Provides endpoints for managing space missions.
+- **spaceX API**: use spaceX API to fetch launch missions information
 
 
 ## Technologies Used

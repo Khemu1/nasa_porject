@@ -8,7 +8,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "npx tsc -p . && node src/scripts/copyFiles.mjs",
-    "test": "jest --detectOpenHandles",
+    "test": "clear && jest --detectOpenHandles",
     "start": "node dist/src/server.js",
     "start:dev": "nodemon",
     "pm2:start": "pm2 start ./ecosystem.config.js --env production",

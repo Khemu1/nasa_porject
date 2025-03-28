@@ -1,4 +1,5 @@
-const API_URL = process.env.REACT_APP_API_BASE || "http://localhost:5000/api/";
+const API_URL =
+  process.env.REACT_APP_API_BASE || "http://localhost:5000/api/v1/";
 console.log("env ,", process.env.REACT_APP_API_BASE);
 async function httpGetPlanets() {
   try {
@@ -22,7 +23,7 @@ async function httpGetPlanets() {
 async function httpGetLaunches() {
   try {
     console.log("trying to fetch launches with url ", API_URL);
-    const data = await fetch(`${API_URL}launches/`);
+    const data = await fetch(`${API_URL}launches?limit=0&page=1/`);
     if (!data.ok) {
       throw new Error(`HTTP error! status: ${data.status}`);
     }
