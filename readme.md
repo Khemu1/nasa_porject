@@ -19,6 +19,7 @@ The **Space Launch System** is a full-stack application that manages upcoming sp
 - **mongoose**: Database management 
 - **pm2**: Process manager  
 - **jest**: API tests
+- **helmet**: secure headers
 
 
 ### **Frontend** (React)

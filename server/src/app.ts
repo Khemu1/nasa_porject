@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "node:path";
 import morgan from "morgan";
 import { api } from "./routes/api";
+import helmet from "helmet";
 
 export const app = express();
 
@@ -15,6 +16,7 @@ app.use(
     type: ["application/json"],
   })
 );
+app.use(helmet());
 // middleware to prevent caching
 app.use((req, res, next) => {
   res.setHeader(
