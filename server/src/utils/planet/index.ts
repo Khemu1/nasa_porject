@@ -4,7 +4,6 @@ import path from "path";
 import { pipeline } from "node:stream/promises";
 import { PlanetModel } from "../../models/planets/planets.model";
 
-// swtiched to using stream/promises instead
 
 export const loadFile = async (): Promise<void> => {
   const sourcePath = path.join(
@@ -20,21 +19,26 @@ export const loadFile = async (): Promise<void> => {
     columns: true,
   });
 
+  const promises: Promise<any>[] = [];
+
   parser.on("data", async (row: { [key: string]: string }) => {
     try {
-      if (returnHabitablePlanets(row))
-        await PlanetModel.findOneAndUpdate(
+      if (returnHabitablePlanets(row)) {
+        const promise = PlanetModel.findOneAndUpdate(
           { keplerName: row.kepler_name },
           { $set: { keplerName: row.kepler_name } },
           { upsert: true, new: true }
         );
+        promises.push(promise); 
+      }
     } catch (error) {
       console.error("Error while parsing CSV:", error);
-      throw error;
     }
   });
 
   await pipeline(fs.createReadStream(sourcePath), parser);
+
+  await Promise.all(promises);
 
   console.log("Parsing is done");
 };
