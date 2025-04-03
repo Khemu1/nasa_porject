@@ -17,7 +17,7 @@ jobs:
       - name: Use Node.js version 20  # Step 2: Set up Node.js
         uses: actions/setup-node@v2  # Uses the official GitHub Action to install Node.js
         with:
-          node-version: '20'  # Installs Node.js version 16
+          node-version: '20'  # Installs Node.js version 20
 
       - name: Install dependencies  # Step 3: Install project dependencies
         run: npm install  # Runs 'npm install' to install dependencies
