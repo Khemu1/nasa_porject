@@ -97,13 +97,14 @@ class LaunchService {
       await Promise.all(
         data.docs.map(async (launchData) => {
           return await LaunchModel.findOneAndUpdate(
-            { mission: launchData.name },
+            {
+              mission: launchData.name,
+              flightNumber: launchData.flight_number,
+            },
             {
               $set: {
-                mission: launchData.name,
                 rocket: launchData.rocket.name,
                 launchDate: launchData.date_local,
-                flightNumber: launchData.flight_number,
                 customers: launchData.payloads.flatMap(
                   (payload) => payload.customers
                 ),

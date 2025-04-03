@@ -1,7 +1,7 @@
 const request = require("supertest");
 const { app } = require("../../app.ts");
 const { connectDB, disconnectDB } = require("../../config/database.config.ts");
-const LaunchService = require("../launches/launches.service").default;
+const LaunchService = require("./launches.service.ts").default;
 
 const ROUTE = "/api/v1/launches";
 

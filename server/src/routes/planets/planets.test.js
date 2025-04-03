@@ -7,7 +7,7 @@ const ROUTE = "/api/v1/planets";
 describe("Testing planets API", () => {
   beforeAll(async () => {
     await connectDB();
-    // loadFile();
+    // await loadFile();
   });
   afterAll(async () => {
     await disconnectDB();
