@@ -8,6 +8,9 @@ on:
 
 jobs:
   build: # Name of the job
+    env:
+      CI: true
+      DATABASE_URI: mongodb://localhost/space_launch_system
     runs-on: ubuntu-latest # Runs this job on the latest Ubuntu environment
 
     steps: # Steps to execute in this job
@@ -18,6 +21,9 @@ jobs:
         uses: actions/setup-node@v2 # Uses the official GitHub Action to install Node.js
         with:
           node-version: "20" # Installs Node.js version 20
+
+      - name: Use MongoDb from github actions
+        uses: supercharge/mongodb-github-cations@1.6.0
 
       - name: Install dependencies for frontend # Step 3: Install frontend dependencies
         run: |
@@ -38,5 +44,5 @@ jobs:
       - name: Build backend # Step 6: Build the backend
         run: |
           cd server # Change to the backend directory
-          npm run build # Run the backend build command
+          npm run build && npm test # Run the backend build & test commands
 
