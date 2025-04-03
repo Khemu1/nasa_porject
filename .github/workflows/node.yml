@@ -22,27 +22,25 @@ jobs:
         with:
           node-version: "20" # Installs Node.js version 20
 
-      - name: Use MongoDb from github actions
-        uses: supercharge/mongodb-github-cations@1.6.0
-
-      - name: Install dependencies for frontend # Step 3: Install frontend dependencies
+      - name: Use MongoDB from GitHub Actions # Step 3: Start MongoDB instance
+        uses: supercharge/mongodb-github-actions@1.6.0 # GitHub Action to start MongoDB
+      
+      - name: Install dependencies for frontend # Step 4: Install frontend dependencies
         run: |
           cd client # Change to the frontend directory
           npm install # Install frontend dependencies
 
-      - name: Build frontend # Step 4: Build the frontend
+      - name: Build frontend # Step 5: Build the frontend
         run: |
           cd client # Change to the frontend directory
           npm run build # Run the frontend build command
 
-
-      - name: Install dependencies for backend # Step 5: Install backend dependencies
+      - name: Install dependencies for backend # Step 6: Install backend dependencies
         run: |
-          cd server # Change to the frontend directory
+          cd server # Change to the backend directory
           npm install # Install backend dependencies
 
-      - name: Build backend # Step 6: Build the backend
+      - name: Build and test backend # Step 7: Build the backend and run tests
         run: |
           cd server # Change to the backend directory
           npm run build && npm test # Run the backend build & test commands
-
