@@ -23,4 +23,4 @@ jobs:
         run: npm install  # Runs 'npm install' to install dependencies
 
       - name: Build frontend  # Step 4: Build the frontend
-        run: npm run build:frontend  # Runs the build command for the frontend
+        run: cd .. && cd .. &  npm run build:frontend  # Runs the build command for the frontend
