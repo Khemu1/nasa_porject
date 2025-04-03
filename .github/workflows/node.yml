@@ -11,6 +11,7 @@ jobs:
     env:
       CI: true
       DATABASE_URI: mongodb://localhost/space_launch_system
+      SPACEX_URL: https://api.spacexdata.com/v4/launches/query
     runs-on: ubuntu-latest # Runs this job on the latest Ubuntu environment
 
     steps: # Steps to execute in this job
