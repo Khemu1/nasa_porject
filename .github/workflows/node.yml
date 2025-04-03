@@ -1,0 +1,26 @@
+name: Space Launch System CI  # Name of the workflow
+
+on:
+  push:  # Runs when code is pushed
+    branches: [master]  # Only when pushing to the master branch
+  pull_request:  # Runs when a pull request is made
+    branches: [master]  # Only when targeting the master branch
+
+jobs:
+  build:  # Name of the job
+    runs-on: ubuntu-latest  # Runs this job on the latest Ubuntu environment
+
+    steps:  # Steps to execute in this job
+      - name: Checkout repository  # Step 1: Get the code from GitHub
+        uses: actions/checkout@v3  # Uses the official GitHub Action to clone the repo
+
+      - name: Use Node.js version 20  # Step 2: Set up Node.js
+        uses: actions/setup-node@v2  # Uses the official GitHub Action to install Node.js
+        with:
+          node-version: '20'  # Installs Node.js version 16
+
+      - name: Install dependencies  # Step 3: Install project dependencies
+        run: npm install  # Runs 'npm install' to install dependencies
+
+      - name: Build frontend  # Step 4: Build the frontend
+        run: npm run build:frontend  # Runs the build command for the frontend
