@@ -23,7 +23,7 @@ jobs:
           node-version: "20" # Installs Node.js version 20
 
       - name: Use MongoDB from GitHub Actions # Step 3: Start MongoDB instance
-        uses: supercharge/mongodb-github-actions@1.6.0 # GitHub Action to start MongoDB
+        uses: supercharge/mongodb-github-action@1.12.0 # GitHub Action to start MongoDB
       
       - name: Install dependencies for frontend # Step 4: Install frontend dependencies
         run: |
