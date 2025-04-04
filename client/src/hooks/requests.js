@@ -1,5 +1,5 @@
 const API_URL =
-  process.env.REACT_APP_API_BASE || "http://localhost:5000/api/v1/";
+  process.env.REACT_APP_API_BASE || "/api/v1/";
 console.log("env ,", process.env.REACT_APP_API_BASE);
 async function httpGetPlanets() {
   try {

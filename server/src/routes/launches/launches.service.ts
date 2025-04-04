@@ -65,7 +65,10 @@ class LaunchService {
         flightNumber: 1,
       });
 
-      if (firstLaunchExists) return;
+      if (firstLaunchExists) {
+        console.log("won't be fetching data from spaceX, data already exists");
+        return;
+      }
       console.log("Starting to fetch data from SpaceX");
 
       const response = await fetch(process.env.SPACEX_URL ?? "", {
