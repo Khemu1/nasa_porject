@@ -1,7 +1,7 @@
 # Space Launch System 
 
 ## Overview
-The **Space Launch System** is a full-stack application that manages upcoming space launches and planetary data. It allows users to view, add, and abort launches while maintaining a list of habitable exoplanets using NASA Exoplanet Archive.
+The **Space Launch System** is a full-stack application that manages upcoming space launches and planetary data. It allows users to view, add, and abort launches while maintaining a list of habitable exoplanets using NASA Exoplanet Archive. Additionally, it integrates the SpaceX API to display a list of completed SpaceX launch missions.
 
 ## Features
 - **Exoplanet Database**: Fetches and filters habitable exoplanets from a dataset.
